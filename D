@@ -1,3 +1,11 @@
+local function safeErr(fn)
+    local ok, err = xpcall(fn, function(e)
+        warn("[ZAY ERROR]", e, debug.traceback())
+    end)
+    return ok
+end
+
+safeErr(function()
 loadstring([[
 repeat task.wait() until game:IsLoaded()
 
@@ -975,6 +983,11 @@ if not ok or not sg.Parent then
     sg.Parent = Player.PlayerGui
 end
 
+local ok2, err = pcall(function()
+    -- pega aquí solo el bloque del main Frame y titleTxt
+end)
+if not ok2 then warn("UI ERROR:", err) end
+
 local function playSound(id,vol,spd)
     pcall(function()
         local s=Instance.new("Sound",SoundService)
@@ -1515,3 +1528,5 @@ end)
 
 print("Script cargado con TP Down incluido.")
 ]])()
+
+end)
